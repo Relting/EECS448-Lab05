@@ -1,0 +1,51 @@
+<html>
+        <head>
+                <title> Welcome to my very cool forum. </title>
+
+        </head>
+
+        <body>
+        <form action="viewUserPosts.php" method = "post">
+
+                To view all posts made by a particular user, select from the dropdown menu:<br> <br>
+		<select name="selection">
+
+<?php
+/* Note how you can exit the php tags to add table tags as needed! */
+
+$mysqli = new mysqli("mysql.eecs.ku.edu", "rachelelting", "XeeR9pee", "rachelelting");
+
+/* check connection */
+if ($mysqli->connect_errno) {
+    printf("Connect failed: %s\n", $mysqli->connect_error);
+    exit();
+}
+
+$query = "SELECT user_id FROM Users";
+
+if ($result = $mysqli->query($query)) {
+
+    /* fetch associative array */
+    while ($row = $result->fetch_assoc()) {
+?>	
+<option value="<?=$row["user_id"]?>"> <?=$row["user_id"]?> </option>
+<?php
+
+}
+
+    /* free result set */
+    $result->free();
+}
+
+
+
+/* close connection */
+$mysqli->close();
+
+?>
+	</select>
+	<input type="submit"> 
+
+	</form>
+	</body>
+</html>

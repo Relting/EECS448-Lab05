@@ -1,0 +1,60 @@
+<html>
+        <head>
+                <title> Welcome to my very cool forum. </title>
+        </head>
+
+        <body>
+        <form action="deletePost.php" method = "post">
+
+                Select which posts to delete:<br> <br>
+<table border="1">
+  <tr>
+    <th>Delete?</th>
+    <th>User</th>
+    <th>Post content</th>
+  </tr>
+
+
+<?php
+/* Note how you can exit the php tags to add table tags as needed! */
+
+$mysqli = new mysqli("mysql.eecs.ku.edu", "rachelelting", "XeeR9pee", "rachelelting");
+
+/* check connection */
+if ($mysqli->connect_errno) {
+    printf("Connect failed: %s\n", $mysqli->connect_error);
+    exit();
+}
+
+$query = "SELECT * FROM Posts";
+
+if ($result = $mysqli->query($query)) {
+
+    /* fetch associative array */
+    while ($row = $result->fetch_assoc()) {
+?>	
+<tr>
+<td> <input type="checkbox" name="valueArray[]" value="<?=$row["post_id"]?>"> </td>
+<td> <?=$row["author_id"]?> </td>
+<td> <?=$row["content"]?> </td>
+</tr>
+<?php
+
+}
+
+    /* free result set */
+    $result->free();
+}
+
+
+
+/* close connection */
+$mysqli->close();
+
+?>
+	</table>
+	<input type="submit"> 
+
+	</form>
+	</body>
+</html>
