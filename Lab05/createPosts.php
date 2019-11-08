@@ -12,6 +12,15 @@ if ($mysqli->connect_errno) {
     exit();
 }
 
+
+
+/*Here is an alternate attempt to check
+
+$query = "SELECT user_id FROM Users WHERE $mysqli->real_escape_string($_POST["username"]);";
+$result = $mysqli->query($query)
+if($result->num_rows) {
+*/
+
 $query = "INSERT INTO Posts (content, author_id) VALUES ('" . $mysqli->real_escape_string($_POST["postText"]) . "','" . $mysqli->real_escape_string($_POST["username"]) . "');";
 
 /* for debugging use: echo $query; */
